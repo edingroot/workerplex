@@ -17,7 +17,7 @@ public:
 
     bool runCommand(const string &cmd, const vector<string> &args);
 
-    int getRunningCount(const string &cmd);
+    int getActiveCount(const string &cmd);
 
     virtual ~Workerplex();
 

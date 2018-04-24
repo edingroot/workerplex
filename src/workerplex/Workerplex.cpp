@@ -27,11 +27,15 @@ void Workerplex::startPrompt() {
             args = vector<string>(tokens.begin() + 1, tokens.end());
         }
 
-        if (cmd == "quit")
+        if (cmd == "quit") {
             break;
-
-        if (!runCommand(cmd, args))
-            cout << "Unknown command: " << cmd << endl;
+        } else if (cmd == "count" && args.size() == 1) {
+            cout << "getActiveCount("<< args[0] << "): "
+                 << getActiveCount(args[0]) << endl;
+        } else {
+            if (!runCommand(cmd, args))
+                cout << "Unknown command: " << cmd << endl;
+        }
 
         boost::this_thread::sleep(boost::posix_time::millisec(5));
         cout << PROMPT;
@@ -67,23 +71,28 @@ void Workerplex::startWorker(Worker *worker, const vector<string> &args) {
     workerThreadSets[cmd].emplace_back(workerThread);
 }
 
-int Workerplex::getRunningCount(const string &cmd) {
+int Workerplex::getActiveCount(const string &cmd) {
     int count = 0;
 
     if (workerThreadSets.count(cmd) != 0) {
         auto i = workerThreadSets[cmd].begin();
+
         while (i != workerThreadSets[cmd].end()) {
             auto workerThread = *i;
 
-            // Check if workerThread exists and is running
-            if (workerThread != nullptr && workerThread->timed_join(boost::posix_time::millisec(0))) {
-                count++;
+            // Check if workerThread exists and is active,
+            // remove thread* entry if it has finished
+            if (workerThread != nullptr) {
+                if (!workerThread->timed_join(boost::posix_time::millisec(0))) {
+                    count++;
+                    i++;
+                } else {
+                    delete workerThread;
+                    workerThread = nullptr;
+                    workerThreadSets[cmd].erase(i);
+                }
             } else {
-                // Remove thread* entry if it has finished
-                delete workerThread;
-                workerThread = nullptr;
                 workerThreadSets[cmd].erase(i);
-                i++;
             }
         }
     }
