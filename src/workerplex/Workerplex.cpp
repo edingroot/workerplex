@@ -82,13 +82,12 @@ int Workerplex::getActiveCount(const string &cmd) {
 
             // Check if workerThread exists and is active,
             // remove thread* entry if it has finished
-            if (workerThread != nullptr) {
+            if (workerThread) {
                 if (!workerThread->timed_join(boost::posix_time::millisec(0))) {
                     count++;
                     i++;
                 } else {
                     delete workerThread;
-                    workerThread = nullptr;
                     workerThreadSets[cmd].erase(i);
                 }
             } else {
@@ -103,17 +102,14 @@ int Workerplex::getActiveCount(const string &cmd) {
 Workerplex::~Workerplex() {
     for (auto &workerPair : workers) {
         Worker *worker = workerPair.second;
-        if (worker) {
-            delete worker;
-            worker = nullptr;
-        }
+        delete worker;
     }
 
     for (auto &workerIdThread : workerThreadSets) {
         for (auto &thread : workerIdThread.second) {
             if (thread) {
+                thread->join();
                 delete thread;
-                thread = nullptr;
             }
         }
     }

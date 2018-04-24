@@ -1,6 +1,3 @@
-#include <iostream>
-#include <boost/thread/thread.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 #include "workerplex/Workerplex.hpp"
 #include "workerplex/workers/pingpong/PingPong.hpp"
 #include "workerplex/workers/longtask/LongTask.hpp"
