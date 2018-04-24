@@ -15,7 +15,7 @@ public:
 
     void startPrompt();
 
-    bool runCommand(const string &cmd);
+    bool runCommand(const string &cmd, const vector<string> &args);
 
     int getRunningCount(const string &cmd);
 
@@ -28,7 +28,7 @@ private:
     map<string, Worker*> workers;
     map<string, vector<boost::thread*>> workerThreadSets; // <cmd, vector<thread*>>
 
-    void startWorker(Worker *worker);
+    void startWorker(Worker *worker, const vector<string> &args);
 
 };
 

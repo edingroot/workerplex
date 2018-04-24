@@ -9,7 +9,7 @@ class Worker {
 public:
     virtual string getIdentifier() = 0;
 
-    virtual void run() = 0;
+    virtual void run(const vector<string> &args) = 0;
 
     // Required to allow inheritance
     virtual ~Worker() = default;

@@ -1,5 +1,6 @@
 #include "Workerplex.hpp"
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/algorithm/string.hpp>
 
 const string Workerplex::PROMPT = "> ";
 
@@ -14,13 +15,22 @@ bool Workerplex::addWorker(Worker *worker) {
 void Workerplex::startPrompt() {
     started = true;
 
-    string cmd;
+    string line;
     cout << PROMPT;
-    while (cin >> cmd) {
+    while (getline(std::cin, line)) {
+        string cmd;
+        vector<string> tokens, args;
+        boost::split(tokens, line, boost::is_any_of(" "));
+
+        cmd = tokens[0];
+        if (tokens.size() > 1) {
+            args = vector<string>(tokens.begin() + 1, tokens.end());
+        }
+
         if (cmd == "quit")
             break;
 
-        if (!runCommand(cmd))
+        if (!runCommand(cmd, args))
             cout << "Unknown command: " << cmd << endl;
 
         boost::this_thread::sleep(boost::posix_time::millisec(5));
@@ -31,18 +41,18 @@ void Workerplex::startPrompt() {
 /**
  * @return false if command not found
  */
-bool Workerplex::runCommand(const string &cmd) {
+bool Workerplex::runCommand(const string &cmd, const vector<string> &args) {
     started = true;
 
     if (workers.count(cmd) != 0) {
-        startWorker(workers[cmd]);
+        startWorker(workers[cmd], args);
         return true;
     } else {
         return false;
     }
 }
 
-void Workerplex::startWorker(Worker *worker) {
+void Workerplex::startWorker(Worker *worker, const vector<string> &args) {
     string cmd = worker->getIdentifier();
 
     // Check if key not exists
@@ -50,8 +60,8 @@ void Workerplex::startWorker(Worker *worker) {
         workerThreadSets[cmd] = vector<boost::thread*>();
     }
 
-    boost::thread *workerThread = new boost::thread([&, worker]() {
-        worker->run();
+    boost::thread *workerThread = new boost::thread([&, worker, args]() {
+        worker->run(args);
     });
 
     workerThreadSets[cmd].emplace_back(workerThread);

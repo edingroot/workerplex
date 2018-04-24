@@ -12,8 +12,8 @@ set(SOURCE_FILES
         src/workerplex/Workerplex.hpp
         src/workerplex/Workerplex.cpp
         src/workerplex/workers/Worker.hpp
-        src/workerplex/workers/PingPong.hpp
-        src/workerplex/workers/PingPong.cpp)
+        src/workerplex/workers/pingpong/PingPong.hpp
+        src/workerplex/workers/pingpong/PingPong.cpp src/workerplex/workers/longtask/LongTask.cpp src/workerplex/workers/longtask/LongTask.hpp)
 add_executable(workerplex ${SOURCE_FILES})
 
 target_link_libraries(workerplex ${Boost_LIBRARIES})

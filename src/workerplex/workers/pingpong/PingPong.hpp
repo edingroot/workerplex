@@ -2,7 +2,7 @@
 #define HANDRECOGNIZER_PINGPONG_HPP
 
 #include <iostream>
-#include "Worker.hpp"
+#include "../Worker.hpp"
 
 using namespace std;
 
@@ -12,7 +12,7 @@ public:
 
     string getIdentifier() override;
 
-    void run() override;
+    void run(const vector<string> &args) override;
 
 };
 
