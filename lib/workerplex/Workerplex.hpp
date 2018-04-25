@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 #include <boost/thread/thread.hpp>
-#include "workers/Worker.hpp"
+#include "Worker.hpp"
 
 using namespace std;
 

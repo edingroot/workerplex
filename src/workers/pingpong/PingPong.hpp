@@ -2,7 +2,7 @@
 #define HANDRECOGNIZER_PINGPONG_HPP
 
 #include <iostream>
-#include "../Worker.hpp"
+#include "workerplex/Worker.hpp"
 
 using namespace std;
 

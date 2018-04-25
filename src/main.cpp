@@ -1,7 +1,7 @@
 #include <iostream>
 #include "workerplex/Workerplex.hpp"
-#include "workerplex/workers/pingpong/PingPong.hpp"
-#include "workerplex/workers/longtask/LongTask.hpp"
+#include "workers/pingpong/PingPong.hpp"
+#include "workers/longtask/LongTask.hpp"
 
 using namespace std;
 

@@ -1,7 +1,7 @@
 #ifndef WORKERPLEX_LONGTASK_HPP
 #define WORKERPLEX_LONGTASK_HPP
 
-#include "../Worker.hpp"
+#include "workerplex/Worker.hpp"
 
 class LongTask : public Worker {
 public:
