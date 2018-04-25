@@ -71,6 +71,16 @@ void Workerplex::startWorker(Worker *worker, const vector<string> &args) {
     workerThreadSets[cmd].emplace_back(workerThread);
 }
 
+vector<string> Workerplex::getCommands() {
+    vector<string> commands;
+
+    for (auto &workerPair : workers) {
+        commands.emplace_back(workerPair.first);
+    }
+
+    return commands;
+}
+
 int Workerplex::getActiveCount(const string &cmd) {
     int count = 0;
 
