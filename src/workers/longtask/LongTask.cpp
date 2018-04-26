@@ -1,6 +1,5 @@
 #include "LongTask.hpp"
 #include <iostream>
-#include <string>
 #include <boost/thread/thread.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 

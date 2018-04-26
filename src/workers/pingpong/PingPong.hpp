@@ -1,7 +1,8 @@
 #ifndef HANDRECOGNIZER_PINGPONG_HPP
 #define HANDRECOGNIZER_PINGPONG_HPP
 
-#include <iostream>
+#include <string>
+#include <vector>
 #include "workerplex/Worker.hpp"
 
 using namespace std;

@@ -1,4 +1,5 @@
 #include "PingPong.hpp"
+#include <iostream>
 
 const string PingPong::IDENTIFIER = "ping";
 
