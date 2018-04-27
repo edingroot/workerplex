@@ -29,9 +29,17 @@ void Workerplex::startPrompt() {
 
         if (cmd == "quit") {
             break;
-        } else if (cmd == "count" && args.size() == 1) {
+
+        } else if (cmd == "_help") {
+            cout << "Configured commands: ";
+            for (auto &command : getCommands())
+                cout << command << " ";
+            cout << endl;
+
+        } else if (cmd == "_active" && args.size() == 1) {
             cout << "getActiveCount("<< args[0] << "): "
                  << getActiveCount(args[0]) << endl;
+
         } else {
             if (!runCommand(cmd, args))
                 cout << "Unknown command: " << cmd << endl;
@@ -71,7 +79,7 @@ void Workerplex::startWorker(Worker *worker, const vector<string> &args) {
     workerThreadSets[cmd].emplace_back(workerThread);
 }
 
-vector<string> Workerplex::getCommands() {
+vector<string> Workerplex::getCommands() const {
     vector<string> commands;
 
     for (auto &workerPair : workers) {

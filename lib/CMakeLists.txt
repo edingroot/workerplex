@@ -9,6 +9,6 @@ add_library(${PROJECT_NAME}
         workerplex/Worker.hpp)
 
 # Boost library
-find_package(Boost 1.58.0 REQUIRED COMPONENTS filesystem thread)
-include_directories(${Boost_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} INTERFACE ${Boost_LIBRARIES})
+find_package(Boost 1.58.0 REQUIRED COMPONENTS thread)
+target_include_directories(${PROJECT_NAME} PUBLIC ${Boost_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${Boost_LIBRARIES})

@@ -17,7 +17,7 @@ public:
 
     bool runCommand(const string &cmd, const vector<string> &args);
 
-    vector<string> getCommands();
+    vector<string> getCommands() const;
 
     int getActiveCount(const string &cmd);
 
