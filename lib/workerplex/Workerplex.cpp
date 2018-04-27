@@ -1,6 +1,6 @@
 #include "Workerplex.hpp"
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/algorithm/string.hpp>
+#include <sstream>
 
 const string Workerplex::PROMPT = "> ";
 
@@ -18,9 +18,13 @@ void Workerplex::startPrompt() {
     string line;
     cout << PROMPT;
     while (getline(std::cin, line)) {
-        string cmd;
+        string cmd, token;
         vector<string> tokens, args;
-        boost::split(tokens, line, boost::is_any_of(" "));
+        istringstream iss(line);
+
+        while (iss >> quoted(token)) {
+            tokens.emplace_back(token);
+        }
 
         cmd = tokens[0];
         if (tokens.size() > 1) {
