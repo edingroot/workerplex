@@ -11,7 +11,7 @@ int main() {
     workerplex.addWorker(new LongTask());
 
     cout << "Starting prompt." << endl;
-    workerplex.startPrompt();
+    workerplex.startPrompt(false);
 
     return 0;
 }

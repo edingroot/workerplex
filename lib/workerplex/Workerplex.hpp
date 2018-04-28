@@ -13,9 +13,14 @@ class Workerplex {
 public:
     bool addWorker(Worker *worker);
 
-    void startPrompt();
+    void startPrompt(bool async = true);
 
     void runCommand(const string &cmd, const vector<string> &args);
+
+    /**
+     * @return return value of worker->run(cmd, args)
+     */
+    string runCommandSync(const string &cmd, const vector<string> &args);
 
     vector<string> getCommands() const;
 
@@ -30,7 +35,7 @@ private:
     map<string, Worker*> workers;
     map<string, vector<boost::thread*>> workerThreadSets; // <cmd, vector<thread*>>
 
-    void startWorker(Worker *worker, const vector<string> &args);
+    void startWorkerAsync(Worker *worker, const vector<string> &args);
 
 };
 

@@ -13,7 +13,7 @@ bool Workerplex::addWorker(Worker *worker) {
     return true;
 }
 
-void Workerplex::startPrompt() {
+void Workerplex::startPrompt(bool async) {
     started = true;
 
     string line;
@@ -47,7 +47,14 @@ void Workerplex::startPrompt() {
 
         } else {
             try {
-                runCommand(cmd, args);
+                if (async) {
+                    runCommand(cmd, args);
+                } else {
+                    string response = runCommandSync(cmd, args);
+                    cout << "--------------- cmd sync response ---------------" << endl;
+                    cout << response;
+                    cout << "-------------------------------------------------" << endl;
+                }
             } catch (command_not_found &e) {
                 cout << e.what() << endl;
             }
@@ -64,10 +71,19 @@ void Workerplex::runCommand(const string &cmd, const vector<string> &args) {
     if (workers.count(cmd) == 0)
         throw command_not_found("Unknown command: " + cmd);
 
-    startWorker(workers[cmd], args);
+    startWorkerAsync(workers[cmd], args);
 }
 
-void Workerplex::startWorker(Worker *worker, const vector<string> &args) {
+string Workerplex::runCommandSync(const string &cmd, const vector<string> &args) {
+    started = true;
+
+    if (workers.count(cmd) == 0)
+        throw command_not_found("Unknown command: " + cmd);
+
+    return workers[cmd]->run(args);
+}
+
+void Workerplex::startWorkerAsync(Worker *worker, const vector<string> &args) {
     string cmd = worker->getIdentifier();
 
     // Check if key not exists
