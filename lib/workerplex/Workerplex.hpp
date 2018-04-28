@@ -15,7 +15,7 @@ public:
 
     void startPrompt();
 
-    bool runCommand(const string &cmd, const vector<string> &args);
+    void runCommand(const string &cmd, const vector<string> &args);
 
     vector<string> getCommands() const;
 

@@ -7,6 +7,7 @@ string PingPong::getIdentifier() {
     return IDENTIFIER;
 }
 
-void PingPong::run(const vector<string> &args) {
+string PingPong::run(const vector<string> &args) {
     cout << "pong" << endl;
+    return "pong";
 }

@@ -12,7 +12,7 @@ public:
 
     string getIdentifier() override;
 
-    void run(const vector<string> &args) override;
+    string run(const vector<string> &args) override;
 
 };
 

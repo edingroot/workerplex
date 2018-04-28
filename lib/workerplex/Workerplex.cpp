@@ -1,6 +1,7 @@
 #include "Workerplex.hpp"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <sstream>
+#include "Exceptions.hpp"
 
 const string Workerplex::PROMPT = "> ";
 
@@ -45,8 +46,11 @@ void Workerplex::startPrompt() {
                  << getActiveCount(args[0]) << endl;
 
         } else {
-            if (!runCommand(cmd, args))
-                cout << "Unknown command: " << cmd << endl;
+            try {
+                runCommand(cmd, args);
+            } catch (command_not_found &e) {
+                cout << e.what() << endl;
+            }
         }
 
         boost::this_thread::sleep(boost::posix_time::millisec(5));
@@ -54,18 +58,13 @@ void Workerplex::startPrompt() {
     }
 }
 
-/**
- * @return false if command not found
- */
-bool Workerplex::runCommand(const string &cmd, const vector<string> &args) {
+void Workerplex::runCommand(const string &cmd, const vector<string> &args) {
     started = true;
 
-    if (workers.count(cmd) != 0) {
-        startWorker(workers[cmd], args);
-        return true;
-    } else {
-        return false;
-    }
+    if (workers.count(cmd) == 0)
+        throw command_not_found("Unknown command: " + cmd);
+
+    startWorker(workers[cmd], args);
 }
 
 void Workerplex::startWorker(Worker *worker, const vector<string> &args) {

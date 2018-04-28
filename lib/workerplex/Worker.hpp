@@ -1,5 +1,5 @@
-#ifndef HANDRECOGNIZER_WORKER_HPP
-#define HANDRECOGNIZER_WORKER_HPP
+#ifndef WORKERPLEX_WORKER_HPP
+#define WORKERPLEX_WORKER_HPP
 
 #include <string>
 
@@ -9,11 +9,11 @@ class Worker {
 public:
     virtual string getIdentifier() = 0;
 
-    virtual void run(const vector<string> &args) = 0;
+    virtual string run(const vector<string> &args) = 0;
 
     // Required to allow inheritance
     virtual ~Worker() = default;
 
 };
 
-#endif //HANDRECOGNIZER_WORKER_HPP
+#endif //WORKERPLEX_WORKER_HPP
