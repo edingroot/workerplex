@@ -2,6 +2,7 @@
 #define WORKERPLEX_WORKER_HPP
 
 #include <string>
+#include <vector>
 
 using namespace std;
 
